@@ -91,7 +91,7 @@
           class="w-[300px] box-border py-[23px] menuList"
           @openChange="onOpenChange"
         >
-          <a-menu-item key="5" class="flex justify-between box-border">
+          <a-menu-item key="5" class="flex justify-between box-border px-[30px]">
             <span>11</span>
             <span>10</span>
           </a-menu-item>
@@ -166,7 +166,7 @@ export default {
   margin: 0;
 }
 
-.menuList > li {
+.menuList>li {
   padding: 0px 30px;
 }
 </style>

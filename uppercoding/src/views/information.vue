@@ -88,17 +88,124 @@
         <a-menu
           mode="inline"
           :open-keys="openKeys"
-          class="w-[300px] box-border py-[23px] menuList"
+          class="w-[300px] box-border py-[23px] pr-[24px] bg-[#f1f4f6]"
           @openChange="onOpenChange"
         >
-          <a-menu-item key="5" class="flex justify-between box-border">
-            <span>11</span>
+          <a-menu-item
+            key="1"
+            class="flex text-[#8c91a0] justify-between box-border menuList"
+          >
+            <div class="flex items-center">
+              <Icon
+                icon="fa-solid:file-alt"
+                class="w-[18px] h-[16px] mr-[10px]"
+                style="color: #747988"
+              />
+              <span>文件</span>
+            </div>
+            <span></span>
+          </a-menu-item>
+          <a-menu-item
+            key="2"
+            class="flex text-[#8c91a0] justify-between box-border menuList"
+          >
+            <div class="flex items-center">
+              <Icon
+                icon="ic:round-gps-fixed"
+                class="w-[18px] h-[16px] mr-[10px]"
+                style="color: #747988"
+              />
+              <span>提交</span>
+            </div>
             <span>10</span>
           </a-menu-item>
-          <a-sub-menu key="sub4">
-            <span slot="title"
-              ><a-icon type="setting" /><span>Navigation Three</span></span
-            >
+          <a-menu-item
+            key="3"
+            class="flex text-[#8c91a0] justify-between box-border menuList"
+          >
+            <div class="flex items-center">
+              <Icon
+                icon="fluent-mdl2:branch-pull-request"
+                style="color: #303133"
+                class="w-[18px] h-[16px] mr-[10px]"
+              />
+              <span>合并请求</span>
+            </div>
+            <span>0</span>
+          </a-menu-item>
+          <a-menu-item
+            key="4"
+            class="flex text-[#8c91a0] justify-between box-border menuList"
+          >
+            <div class="flex items-center">
+              <Icon
+                icon="ri:git-branch-fill"
+                style="color: #303133"
+                class="w-[18px] h-[16px] mr-[10px]"
+              />
+              <span>分支</span>
+            </div>
+            <span>1</span>
+          </a-menu-item>
+          <a-menu-item
+            key="5"
+            class="flex text-[#8c91a0] justify-between box-border menuList"
+          >
+            <div class="flex items-center">
+              <Icon
+                icon="mage:alarm-clock-fill"
+                style="color: #747988"
+                class="w-[18px] h-[16px] mr-[10px]"
+              />
+              <span>任务</span>
+            </div>
+            <span>0</span>
+          </a-menu-item>
+          <a-menu-item
+            key="6"
+            class="flex text-[#8c91a0] justify-between box-border menuList"
+          >
+            <div class="flex items-center">
+              <Icon
+                icon="pajamas:label"
+                style="color: #303133"
+                class="w-[18px] h-[16px] mr-[10px]"
+              />
+              <span>标签</span>
+            </div>
+            <span>0</span>
+          </a-menu-item>
+          <a-menu-item
+            key="7"
+            class="flex text-[#8c91a0] justify-between box-border menuList"
+          >
+            <div class="flex items-center">
+              <Icon
+                icon="tdesign:member"
+                style="color: #303133"
+                class="w-[18px] h-[16px] mr-[10px]"
+              />
+              <span>成员</span>
+            </div>
+            <span>1</span>
+          </a-menu-item>
+          <a-menu-item
+            key="8"
+            class="flex text-[#8c91a0] justify-between box-border menuList"
+          >
+            <div class="flex items-center">
+              <Icon
+                icon="icon-park-solid:announcement"
+                style="color: #747988"
+                class="w-[18px] h-[16px] mr-[10px]"
+              />
+              <span>动态</span>
+            </div>
+            <span></span>
+          </a-menu-item>
+
+          <a-sub-menu key="sub1" class="setChildren">
+            <span slot="title"><a-icon type="setting" /><span>设置</span></span>
             <a-menu-item key="9"> Option 9 </a-menu-item>
             <a-menu-item key="10"> Option 10 </a-menu-item>
             <a-menu-item key="11"> Option 11 </a-menu-item>
@@ -106,8 +213,8 @@
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>
-      <a-layout-content class="w-[100%] h-[90vh] bg-[pink]">
-        <router-link></router-link>
+      <a-layout-content class="w-[100%] h-[90vh] bg-[#fff]">
+        <router-view></router-view>
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -117,8 +224,8 @@
 export default {
   data() {
     return {
-      rootSubmenuKeys: ["sub1", "sub2", "sub4"],
-      openKeys: ["sub1"],
+      rootSubmenuKeys: ["sub1"],
+      openKeys: [],
     };
   },
   methods: {
@@ -166,7 +273,24 @@ export default {
   margin: 0;
 }
 
-.menuList > li {
+.menuList {
   padding: 0px 30px;
+  z-index: 21;
+}
+
+.ant-menu-inline .ant-menu-selected::after,
+.ant-menu-inline .ant-menu-item-selected::after {
+  transform: scaleY(1);
+  opacity: 0;
+  transition: transform 0.15s cubic-bezier(0.645, 0.045, 0.355, 1),
+    opacity 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: #fff;
+}
+
+.setChildren>ul {
+  background-color: #f1f4f6;
 }
 </style>

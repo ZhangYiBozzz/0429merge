@@ -3,12 +3,7 @@
     class="w-full h-[100vh] pt-[90px] bg-[url('../../img/bj.png')] bg-cover relative"
   >
     <div class="absolute top-[10px] right-[50px]">
-      <a-select
-        default-value="zh"
-        style="width: 120px"
-        @change="handleChange"
-        class="custom-select-no-border"
-      >
+      <a-select default-value="zh" style="width: 120px" @change="handleChange">
         <a-select-option value="zh">简体中文</a-select-option>
         <a-select-option value="en">English</a-select-option>
       </a-select>
@@ -162,7 +157,10 @@ export default {
 #components-form-demo-normal-login .login-form-button {
   width: 100%;
 }
-/* ::v-deep .custom-select-no-border {
-  
-} */
+.ant-select-selection {
+  border: none;
+  border-top-width: 0px;
+  background-color: #aecaff;
+  box-shadow: none !important;
+}
 </style>

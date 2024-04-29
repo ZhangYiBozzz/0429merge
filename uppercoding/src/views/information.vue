@@ -213,7 +213,7 @@
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>
-      <a-layout-content class="w-[100%] h-[90vh]">
+      <a-layout-content class="w-[100%] h-[90vh] bg-[#fff]">
         <router-view></router-view>
       </a-layout-content>
     </a-layout>
@@ -291,7 +291,6 @@ export default {
 }
 
 .setChildren>ul {
-  /* z-index: 21; */
   background-color: #f1f4f6;
 }
 </style>

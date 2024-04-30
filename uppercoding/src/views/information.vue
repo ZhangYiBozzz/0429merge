@@ -206,26 +206,124 @@
 
           <a-sub-menu key="sub1" class="setChildren">
             <span slot="title"><a-icon type="setting" /><span>设置</span></span>
-            <a-menu-item key="9"> Option 9 </a-menu-item>
-            <a-menu-item key="10"> Option 10 </a-menu-item>
-            <a-menu-item key="11"> Option 11 </a-menu-item>
-            <a-menu-item key="12"> Option 12 </a-menu-item>
+            <a-menu-item key="9">常规</a-menu-item>
+            <a-menu-item key="10">分支</a-menu-item>
+            <a-menu-item key="11">任务</a-menu-item>
+            <a-menu-item key="12">Webhooxs</a-menu-item>
+            <a-menu-item key="12">高级</a-menu-item>
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>
       <a-layout-content class="w-[100%] h-[90vh] bg-[#fff]">
-        <router-view></router-view>
+        <!-- <router-view></router-view> -->
+        <div class="px-[48px] my-[16px]">
+          <!-- 分支与搜索 -->
+          <ul class="flex items-center justify-between h-[32px]">
+            <li class="h-[32px] w-[132px] flex justify-between items-center">
+              <div class="mr-[16px]">
+                <a-select
+                  default-value="master"
+                  style="width: 120px"
+                  @change="handleChange"
+                >
+                  <a-select-option
+                    v-for="(item, index) in selecrBranch"
+                    :key="index"
+                    :value="item.name"
+                  >
+                    {{ item.name }}
+                  </a-select-option>
+                </a-select>
+              </div>
+              <span>abc</span>
+            </li>
+            <li class="h-[32px]">
+              <a-input ref="userNameInput" class="w-[250px]">
+                <a-icon slot="prefix" type="search" />
+              </a-input>
+            </li>
+          </ul>
+          <!-- 更新时间 -->
+          <ul
+            class="h-[83px] w-[100%] mt-[16px] border-[1px] flex justify-between items-center border-solid border-[#e3e3e3] box-border px-[16px] pt-[4px]"
+          >
+            <li>
+              <p
+                class="mb-[4px] text-[#5b82b6]"
+                v-if="aBranch && aBranch.commit && aBranch.commit.commit"
+              >
+                {{ aBranch.commit.commit.message }}
+              </p>
+              <p class="mb-[4px]" v-else>加载中...</p>
+              <div class="flex items-center">
+                <a-avatar size="small" icon="user" class="mr-[8px]" />
+                <p
+                  class="mb-[4px]"
+                  v-if="aBranch && aBranch.commit && aBranch.commit.commit"
+                >
+                  {{ aBranch.commit.commit.committer.email }}
+                </p>
+                <p class="mb-[4px]" v-else>加载中...</p>
+                <Icon
+                  icon="material-symbols:help-outline"
+                  style="color: #5b82b6"
+                  class="w-[14px] h-[14px] mx-[8px]"
+                />
+                <p>编辑于:{{ formattedCommitDate }}</p>
+              </div>
+            </li>
+            <li class="h-[32px]">
+              <a-button>
+                <template>
+                  <div class="relative flex w-[150px]">
+                    <p>aa3148d9</p>
+                    <div class="absolute flex right-0 top-[4px]">
+                      <p
+                        class="w-[1px] h-[33px] bg-[#e4e4e4] absolute left-[-13px] top-[-9px]"
+                      ></p>
+                      <Icon icon="zondicons:copy" style="color: #636e94" />
+                    </div>
+                  </div>
+                </template>
+              </a-button>
+            </li>
+          </ul>
+        </div>
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 
 <script>
+import { branchAll, aBranch } from "@/service";
+import dayjs from "dayjs";
+
 export default {
+  async created() {
+    this.selecrBranch = (
+      await branchAll({
+        owner: this.owner,
+        repo: this.repo,
+      })
+    ).data;
+    this.branch = this.selecrBranch.find((item) => item.name === "master").name;
+    this.aBranch = (
+      await aBranch({
+        owner: this.owner,
+        repo: this.repo,
+        branch: this.branch,
+      })
+    ).data;
+  },
   data() {
     return {
       rootSubmenuKeys: ["sub1"],
       openKeys: [],
+      selecrBranch: [], // 分支选择(所有分支)
+      aBranch: [], // 单个分支
+      owner: "zhangyibo111", // 仓库所属地址
+      repo: "git-stuby", // 仓库路径
+      branch: "master", //分支名称
     };
   },
   methods: {
@@ -238,6 +336,38 @@ export default {
       } else {
         this.openKeys = latestOpenKey ? [latestOpenKey] : [];
       }
+    },
+    handleChange(value) {
+      this.branch = value;
+    },
+  },
+  computed: {
+    formattedCommitDate() {
+      // 确保aBranch.commit.commit.committer.date存在
+      if (
+        this.aBranch &&
+        this.aBranch.commit &&
+        this.aBranch.commit.commit &&
+        this.aBranch.commit.commit.committer &&
+        this.aBranch.commit.commit.committer.date
+      ) {
+        return dayjs(this.aBranch.commit.commit.committer.date).format(
+          "YYYY-MM-DD HH:mm:ss"
+        ); // 使用你想要的格式
+      }
+      return "No date available"; // 如果日期不存在，返回一个默认值
+    },
+  },
+  watch: {
+    async branch() {
+      this.aBranch = (
+        await aBranch({
+          owner: this.owner,
+          repo: this.repo,
+          branch: this.branch,
+        })
+      ).data;
+      console.log(this.aBranch);
     },
   },
 };
@@ -274,7 +404,7 @@ export default {
 }
 
 .menuList {
-  padding: 0px 30px;
+  padding-right: 0px 30px;
   z-index: 21;
 }
 
@@ -290,7 +420,17 @@ export default {
   background-color: #fff;
 }
 
-.setChildren>ul {
-  background-color: #f1f4f6;
+::v-deep .setChildren > ul {
+  background-color: #f1f4f6 !important;
+  padding-right: 24px;
+}
+
+::v-deep .setChildren > div > i {
+  padding-right: 24px;
+}
+
+::v-deep .setChildren > div > span {
+  display: flex;
+  align-items: center;
 }
 </style>

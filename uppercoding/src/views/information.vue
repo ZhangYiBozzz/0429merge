@@ -100,126 +100,169 @@
           class="w-[300px] box-border py-[23px] pr-[24px] bg-[#f1f4f6]"
           @openChange="onOpenChange"
         >
+          <!-- 文件（首页）页面 -->
           <a-menu-item
             key="1"
             class="flex text-[#8c91a0] justify-between box-border menuList"
           >
-            <div class="flex items-center">
-              <Icon
-                icon="fa-solid:file-alt"
-                class="w-[18px] h-[16px] mr-[10px]"
-                style="color: #747988"
-              />
-              <span>文件</span>
-            </div>
-            <span></span>
+            <router-link to="/information/index">
+              <div class="flex items-center">
+                <Icon
+                  icon="fa-solid:file-alt"
+                  class="w-[18px] h-[16px] mr-[10px]"
+                  style="color: #747988"
+                />
+                <span>文件</span>
+              </div>
+              <span></span>
+            </router-link>
           </a-menu-item>
-          <a-menu-item
-            key="2"
-            class="flex text-[#8c91a0] justify-between box-border menuList"
-          >
-            <div class="flex items-center">
-              <Icon
-                icon="ic:round-gps-fixed"
-                class="w-[18px] h-[16px] mr-[10px]"
-                style="color: #747988"
-              />
-              <span>提交</span>
-            </div>
-            <span>{{ submitNum }}</span>
+          <!-- 提交页面 -->
+          <a-menu-item key="2">
+            <router-link to="/information/submit">
+              <div
+                class="flex text-[#8c91a0] justify-between box-border menuList"
+              >
+                <div class="flex items-center">
+                  <Icon
+                    icon="ic:round-gps-fixed"
+                    class="w-[18px] h-[16px] mr-[10px]"
+                    style="color: #747988"
+                  />
+                  <span>提交</span>
+                </div>
+                <span>{{ submitNum }}</span>
+              </div>
+            </router-link>
           </a-menu-item>
-          <a-menu-item
-            key="3"
-            class="flex text-[#8c91a0] justify-between box-border menuList"
-          >
-            <div class="flex items-center">
-              <Icon
-                icon="fluent-mdl2:branch-pull-request"
-                style="color: #303133"
-                class="w-[18px] h-[16px] mr-[10px]"
-              />
-              <span>合并请求</span>
-            </div>
-            <span>{{ pullsNum }}</span>
+          <!-- 合并请求页面 -->
+          <a-menu-item key="3">
+            <router-link to="/information/mergeRequest">
+              <div
+                class="flex text-[#8c91a0] justify-between box-border menuList"
+              >
+                <div class="flex items-center">
+                  <Icon
+                    icon="fluent-mdl2:branch-pull-request"
+                    style="color: #303133"
+                    class="w-[18px] h-[16px] mr-[10px]"
+                  />
+                  <span>合并请求</span>
+                </div>
+                <span>{{ pullsNum }}</span>
+              </div>
+            </router-link>
           </a-menu-item>
-          <a-menu-item
-            key="4"
-            class="flex text-[#8c91a0] justify-between box-border menuList"
-          >
-            <div class="flex items-center">
-              <Icon
-                icon="ri:git-branch-fill"
-                style="color: #303133"
-                class="w-[18px] h-[16px] mr-[10px]"
-              />
-              <span>分支</span>
-            </div>
-            <span>{{ selecrBranch.length }}</span>
+          <!-- 分支页面 -->
+          <a-menu-item key="4">
+            <router-link to="/information/branch">
+              <div
+                class="flex text-[#8c91a0] justify-between box-border menuList"
+              >
+                <div class="flex items-center">
+                  <Icon
+                    icon="ri:git-branch-fill"
+                    style="color: #303133"
+                    class="w-[18px] h-[16px] mr-[10px]"
+                  />
+                  <span>分支</span>
+                </div>
+                <span>{{ selecrBranch.length }}</span>
+              </div>
+            </router-link>
           </a-menu-item>
-          <a-menu-item
-            key="5"
-            class="flex text-[#8c91a0] justify-between box-border menuList"
-          >
-            <div class="flex items-center">
-              <Icon
-                icon="mage:alarm-clock-fill"
-                style="color: #747988"
-                class="w-[18px] h-[16px] mr-[10px]"
-              />
-              <span>任务</span>
-            </div>
-            <span>{{ taskNum }}</span>
+          <!-- 任务页面 -->
+          <a-menu-item key="5">
+            <router-link to="/information/task">
+              <div
+                class="flex text-[#8c91a0] justify-between box-border menuList"
+              >
+                <div class="flex items-center">
+                  <Icon
+                    icon="mage:alarm-clock-fill"
+                    style="color: #747988"
+                    class="w-[18px] h-[16px] mr-[10px]"
+                  />
+                  <span>任务</span>
+                </div>
+                <span>{{ taskNum }}</span>
+              </div>
+            </router-link>
           </a-menu-item>
-          <a-menu-item
-            key="6"
-            class="flex text-[#8c91a0] justify-between box-border menuList"
-          >
-            <div class="flex items-center">
-              <Icon
-                icon="pajamas:label"
-                style="color: #303133"
-                class="w-[18px] h-[16px] mr-[10px]"
-              />
-              <span>标签</span>
-            </div>
-            <span>{{ labelNum }}</span>
+          <!-- 标签页面 -->
+          <a-menu-item key="6">
+            <router-link to="/information/label">
+              <div
+                class="flex text-[#8c91a0] justify-between box-border menuList"
+              >
+                <div class="flex items-center">
+                  <Icon
+                    icon="pajamas:label"
+                    style="color: #303133"
+                    class="w-[18px] h-[16px] mr-[10px]"
+                  />
+                  <span>标签</span>
+                </div>
+                <span>{{ labelNum }}</span>
+              </div>
+            </router-link>
           </a-menu-item>
-          <a-menu-item
-            key="7"
-            class="flex text-[#8c91a0] justify-between box-border menuList"
-          >
-            <div class="flex items-center">
-              <Icon
-                icon="tdesign:member"
-                style="color: #303133"
-                class="w-[18px] h-[16px] mr-[10px]"
-              />
-              <span>成员</span>
-            </div>
-            <span>{{ memberNum }}</span>
+          <!-- 成员页面 -->
+          <a-menu-item key="7">
+            <router-link to="/information/member">
+              <div
+                class="flex text-[#8c91a0] justify-between box-border menuList"
+              >
+                <div class="flex items-center">
+                  <Icon
+                    icon="tdesign:member"
+                    style="color: #303133"
+                    class="w-[18px] h-[16px] mr-[10px]"
+                  />
+                  <span>成员</span>
+                </div>
+                <span>{{ memberNum }}</span>
+              </div>
+            </router-link>
           </a-menu-item>
-          <a-menu-item
-            key="8"
-            class="flex text-[#8c91a0] justify-between box-border menuList"
-          >
-            <div class="flex items-center">
-              <Icon
-                icon="icon-park-solid:announcement"
-                style="color: #747988"
-                class="w-[18px] h-[16px] mr-[10px]"
-              />
-              <span>动态</span>
-            </div>
-            <span></span>
+          <!-- 动态页面 -->
+          <a-menu-item key="8">
+            <router-link to="/information/trends">
+              <div
+                class="flex text-[#8c91a0] justify-between box-border menuList"
+              >
+                <div class="flex items-center">
+                  <Icon
+                    icon="icon-park-solid:announcement"
+                    style="color: #747988"
+                    class="w-[18px] h-[16px] mr-[10px]"
+                  />
+                  <span>动态</span>
+                </div>
+                <span></span>
+              </div>
+            </router-link>
           </a-menu-item>
-
+          <!-- 设置 -->
           <a-sub-menu key="sub1" class="setChildren">
             <span slot="title"><a-icon type="setting" /><span>设置</span></span>
-            <a-menu-item key="9">常规</a-menu-item>
-            <a-menu-item key="10">分支</a-menu-item>
-            <a-menu-item key="11">任务</a-menu-item>
-            <a-menu-item key="12">Webhooxs</a-menu-item>
-            <a-menu-item key="12">高级</a-menu-item>
+            <a-menu-item key="9">
+              <router-link to="/information/convention"> 常规 </router-link>
+            </a-menu-item>
+            <a-menu-item key="10">
+              <router-link to="/information/branchSetting"> 分支 </router-link>
+            </a-menu-item>
+            <a-menu-item key="11">
+              <router-link to="/information/taskSetting"> 任务 </router-link>
+            </a-menu-item>
+            <a-menu-item key="12">
+              <router-link to="/information/webhooksSetting">
+                Webhooxs
+              </router-link>
+            </a-menu-item>
+            <a-menu-item key="13">
+              <router-link to="/information/seniorSetting"> 高级 </router-link>
+            </a-menu-item>
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>
@@ -335,28 +378,34 @@ export default {
 #components-layout-demo-basic {
   text-align: center;
 }
+
 #components-layout-demo-basic .ant-layout-header,
 #components-layout-demo-basic .ant-layout-footer {
   background: #7dbcea;
   color: #fff;
 }
+
 #components-layout-demo-basic .ant-layout-footer {
   line-height: 1.5;
 }
+
 #components-layout-demo-basic .ant-layout-sider {
   background: #3ba0e9;
   color: #fff;
   line-height: 120px;
 }
+
 #components-layout-demo-basic .ant-layout-content {
   background: rgba(16, 142, 233, 1);
   color: #fff;
   min-height: 120px;
   line-height: 120px;
 }
+
 #components-layout-demo-basic > .ant-layout {
   margin-bottom: 48px;
 }
+
 #components-layout-demo-basic > .ant-layout:last-child {
   margin: 0;
 }

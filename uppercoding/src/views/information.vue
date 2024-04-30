@@ -82,7 +82,7 @@
     </a-layout-header>
     <a-layout>
       <a-layout-sider
-        class="w-[300px] h-[90vh] bg-[#f1f4f6]"
+        class="w-[300px] h-[92vh] bg-[#f1f4f6]"
         style="width: 300px; max-width: 300px; flex: 0 0 300px"
       >
         <a-menu
@@ -222,6 +222,7 @@
 
 <script>
 export default {
+  name: "InformationContainer",
   data() {
     return {
       rootSubmenuKeys: ["sub1"],
@@ -290,7 +291,7 @@ export default {
   background-color: #fff;
 }
 
-.setChildren>ul {
+.setChildren > ul {
   background-color: #f1f4f6;
 }
 </style>

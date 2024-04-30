@@ -11,7 +11,9 @@
             class="h-[32px] mr-[48px] ml-[24px] cursor-pointer"
           />
           <div class="flex items-center mr-[24px] h-[32px]">
-            <a-button class="border-[0px]">
+            <a-button
+              class="border-[0px] hover:bg-[#e5ebfd] hover:text-[#3455db] cursor-pointer"
+            >
               <template>
                 <div class="flex h-[32px] items-center justify-around">
                   <span class="text-[14px] mr-[8px]">仓库</span>
@@ -21,7 +23,9 @@
             </a-button>
           </div>
           <div class="flex items-center mr-[30px] h-[32px]">
-            <a-button class="border-[0px]">
+            <a-button
+              class="border-[0px] hover:bg-[#e5ebfd] hover:text-[#3455db] cursor-pointer"
+            >
               <template>
                 <div class="flex h-[32px] items-center justify-around">
                   <span class="text-[14px] mr-[8px]">仓库组</span>
@@ -33,7 +37,7 @@
           <Icon
             icon="fluent-mdl2:branch-pull-request"
             style="color: #303133"
-            class="w-[25px] h-[18px]"
+            class="w-[35px] h-[28px] p-[5px] rounded-[3px] hover:bg-[#e5ebfd] hover:text-[#3455db]"
           />
         </li>
         <!-- 头部的右边 -->
@@ -42,34 +46,39 @@
             <li>
               <Icon
                 icon="icon-park-solid:add"
-                class="w-[25px] h-[25px]"
+                class="w-[35px] h-[35px] p-[5px] rounded-[3px] hover:bg-[#e5ebfd] hover:text-[#3455db] cursor-pointer"
                 style="color: #395ad4"
               />
             </li>
-            <li><span class="block bg-[#e0e0e0] h-[16px] w-[1px]"></span></li>
+            <li><span class="block bg-[#e0e0e0] h-[24px] w-[1.5px]"></span></li>
             <li>
               <Icon
                 icon="material-symbols:notifications-active-outline-rounded"
                 style="color: #1b1b1b"
-                class="h-[25px] w-[18px]"
+                class="h-[35px] w-[35px] p-[5px] rounded-[3px] hover:bg-[#e5ebfd] hover:text-[#3455db] cursor-pointer"
               />
             </li>
             <li>
               <Icon
                 icon="material-symbols:help-outline"
                 style="color: #1b1b1b"
-                class="w-[25px] h-[25px]"
+                class="h-[35px] w-[35px] p-[5px] rounded-[3px] hover:bg-[#e5ebfd] hover:text-[#3455db] cursor-pointer"
               />
             </li>
             <li>
               <Icon
                 icon="pepicons-pencil:internet"
                 style="color: #1b1b1b"
-                class="h-[25px] w-[18px]"
+                class="h-[35px] w-[35px] p-[5px] rounded-[3px] hover:bg-[#e5ebfd] hover:text-[#3455db] cursor-pointer"
               />
             </li>
-            <li class="flex items-center">
-              <a-avatar class="mr-[14px]">Z</a-avatar>
+            <li class="flex items-center cursor-pointer ">
+              <a-avatar
+                class="mr-[14px]"
+                v-if="userName"
+                :src="userName.avatar_url"
+              ></a-avatar>
+              <a-avatar class="mr-[14px]" v-else>A</a-avatar>
               <Icon
                 icon="fa6-solid:sort-down"
                 class="w-[18px] h-[14px]"
@@ -117,7 +126,7 @@
               />
               <span>提交</span>
             </div>
-            <span>10</span>
+            <span>{{ submitNum }}</span>
           </a-menu-item>
           <a-menu-item
             key="3"
@@ -131,7 +140,7 @@
               />
               <span>合并请求</span>
             </div>
-            <span>0</span>
+            <span>{{ pullsNum }}</span>
           </a-menu-item>
           <a-menu-item
             key="4"
@@ -145,7 +154,7 @@
               />
               <span>分支</span>
             </div>
-            <span>1</span>
+            <span>{{ selecrBranch.length }}</span>
           </a-menu-item>
           <a-menu-item
             key="5"
@@ -159,7 +168,7 @@
               />
               <span>任务</span>
             </div>
-            <span>0</span>
+            <span>{{ taskNum }}</span>
           </a-menu-item>
           <a-menu-item
             key="6"
@@ -173,7 +182,7 @@
               />
               <span>标签</span>
             </div>
-            <span>0</span>
+            <span>{{ labelNum }}</span>
           </a-menu-item>
           <a-menu-item
             key="7"
@@ -187,7 +196,7 @@
               />
               <span>成员</span>
             </div>
-            <span>1</span>
+            <span>{{ memberNum }}</span>
           </a-menu-item>
           <a-menu-item
             key="8"
@@ -295,18 +304,30 @@
 </template>
 
 <script>
-import { branchAll, aBranch } from "@/service";
+import {
+  branchAll,
+  aBranch,
+  submitAll,
+  memberAll,
+  labelAll,
+  taskAll,
+  pullsAll,
+  userInfo,
+} from "@/service";
 import dayjs from "dayjs";
 
 export default {
   async created() {
+    // 获取所有分支
     this.selecrBranch = (
       await branchAll({
         owner: this.owner,
         repo: this.repo,
       })
     ).data;
+    // 获取默认分支名
     this.branch = this.selecrBranch.find((item) => item.name === "master").name;
+    // 获取单个分支
     this.aBranch = (
       await aBranch({
         owner: this.owner,
@@ -314,6 +335,43 @@ export default {
         branch: this.branch,
       })
     ).data;
+    // 获取提交次数
+    this.submitNum = (
+      await submitAll({
+        owner: this.owner,
+        repo: this.repo,
+      })
+    ).data.length;
+    //获取仓库所有成员人数
+    this.memberNum = (
+      await memberAll({
+        owner: this.owner,
+        repo: this.repo,
+      })
+    ).data.length;
+    // 获取仓库所有标签数
+    this.labelNum = (
+      await labelAll({
+        owner: this.owner,
+        repo: this.repo,
+      })
+    ).data.length;
+    // 获取仓库所有任务数
+    this.taskNum = (
+      await taskAll({
+        owner: this.owner,
+        repo: this.repo,
+      })
+    ).data.length;
+    // 获取仓库合并请求次数
+    this.pullsNum = (
+      await pullsAll({
+        owner: this.owner,
+        repo: this.repo,
+      })
+    ).data.length;
+    // 获取仓库合并请求次数
+    this.userName = (await userInfo()).data;
   },
   data() {
     return {
@@ -324,6 +382,12 @@ export default {
       owner: "zhangyibo111", // 仓库所属地址
       repo: "git-stuby", // 仓库路径
       branch: "master", //分支名称
+      submitNum: 0,
+      memberNum: 0,
+      labelNum: 0,
+      taskNum: 0,
+      pullsNum: 0,
+      userName: null,
     };
   },
   methods: {

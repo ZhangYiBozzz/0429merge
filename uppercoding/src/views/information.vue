@@ -129,7 +129,7 @@
                 style="color: #303133"
                 class="w-[18px] h-[16px] mr-[10px]"
               />
-              <span>合并请求</span>
+              <span @click="$router.push('/mergeRequest')">合并请求</span>
             </div>
             <span>0</span>
           </a-menu-item>
@@ -290,7 +290,7 @@ export default {
   background-color: #fff;
 }
 
-.setChildren>ul {
+.setChildren > ul {
   background-color: #f1f4f6;
 }
 </style>

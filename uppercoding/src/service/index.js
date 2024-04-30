@@ -22,3 +22,11 @@ export const aBranch = (owner, repo, params, branch) =>
 
 export const getlists = () =>
   request.get("api/v5/repos/simonhungchun/demo/commits");
+
+// 创建一个仓库
+export const createRepo = (data = {}) =>
+  request.post("/api/v5/user/repos", data);
+
+// 列出授权用户所属的组织
+export const getOrganizations = (params) =>
+  request.get("/api/v5/user/orgs", { params });

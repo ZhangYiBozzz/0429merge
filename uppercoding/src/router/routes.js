@@ -3,6 +3,7 @@ import Index from "@/views/index.vue";
 import Info from "@/views/information.vue";
 import mergeRequest from "@/views/mergeRequest.vue";
 import establishMergeRequest from "@/views/establishMergeRequest.vue";
+import member from "@/views/member.vue";
 
 export default [
   {
@@ -28,6 +29,10 @@ export default [
       {
         path: "/establishMergeRequest",
         component: establishMergeRequest,
+      },
+      {
+        path: "/member",
+        component: member,
       },
     ],
   },

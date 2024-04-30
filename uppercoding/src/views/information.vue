@@ -123,13 +123,16 @@
             key="3"
             class="flex text-[#8c91a0] justify-between box-border menuList"
           >
-            <div class="flex items-center">
+            <div
+              class="flex items-center"
+              @click="$router.push('/mergeRequest')"
+            >
               <Icon
                 icon="fluent-mdl2:branch-pull-request"
                 style="color: #303133"
                 class="w-[18px] h-[16px] mr-[10px]"
               />
-              <span @click="$router.push('/mergeRequest')">合并请求</span>
+              <span>合并请求</span>
             </div>
             <span>0</span>
           </a-menu-item>
@@ -179,7 +182,7 @@
             key="7"
             class="flex text-[#8c91a0] justify-between box-border menuList"
           >
-            <div class="flex items-center">
+            <div class="flex items-center" @click="$router.push('/member')">
               <Icon
                 icon="tdesign:member"
                 style="color: #303133"

@@ -7,12 +7,7 @@
         <!-- 标题 -->
         <div class="bg-[rgb(241,243,247)] py-[10px] pl-[10px]">原分支</div>
         <div class="p-[10px] flex justify-between">
-          <a-select
-            mode="tags"
-            style="width: 49%"
-            placeholder="Tags Mode"
-            showArrow="true"
-          >
+          <a-select mode="tags" style="width: 49%" showArrow="true">
             <a-select-option v-for="i in 25" :key="(i + 9).toString(36) + i">
               {{ (i + 9).toString(36) + i }}
             </a-select-option>

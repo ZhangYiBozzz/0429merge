@@ -22,3 +22,7 @@ export const aBranch = (owner, repo, params, branch) =>
 
 export const getlists = () =>
   request.get("api/v5/repos/simonhungchun/demo/commits");
+
+// 获取仓库合并请求
+export const mergeRequest = (owner, repo) =>
+  request.get(`api/v5/repos/${owner}/${repo}/pulls`);

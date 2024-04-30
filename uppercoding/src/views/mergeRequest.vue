@@ -87,7 +87,16 @@
   </div>
 </template>
 <script>
+import { mergeRequest } from "@/service";
+
+const { log } = console;
+
 export default {
+  async created() {
+    const getMergeRequest = await mergeRequest("zhangyibo111", "git-stuby");
+    log(getMergeRequest);
+  },
+
   data() {
     return {
       // 搜索框

@@ -3,10 +3,10 @@
     <div class="w-full h-[112px]">
       <!-- 上 -->
       <div class="flex justify-between">
-        <div class="w-[300px] h-[64px] flex items-center justify-around">
+        <div class="w-[240px] h-[64px] flex items-center justify-around">
           <a-avatar style="color: #f56a00"> A </a-avatar>
           <div>
-            <p>{{ fullName }}</p>
+            <p>{{ fullName.owner }}/{{ repo }}</p>
             <p>这是一个测试项目。</p>
           </div>
         </div>
@@ -174,8 +174,6 @@ const columns = [
   },
 ];
 
-// console.log(this.trees);
-
 export default {
   data() {
     return {
@@ -186,22 +184,25 @@ export default {
       openKeys: [],
       selecrBranch: [], // 分支选择(所有分支)
       aBranch: [], // 单个分支
-      owner: "zhangyibo111", // 仓库所属地址
-      repo: "git-stuby", // 仓库路径
+      owner: "", // 仓库所属地址
+      repo: "", // 仓库路径
       branch: "master", //分支名称
       warehousePath: "",
+      fileowner: "",
+      filepath: {},
     };
   },
   async created() {
-    console.log();
+    this.owner = this.fullName.owner;
+    this.repo = this.fullName.repo;
+    console.log(this.owner, this.repo);
     // 仓库的目录
     const res = await getRepoTree({
-      owner: "zhangyibo111",
-      repo: "git-stuby",
+      owner: this.owner,
+      repo: this.repo,
       sha: "master",
     });
     this.trees = res.data.tree;
-    // console.log(this.trees);
 
     this.data = this.trees.map((item) => ({
       key: item.size,
@@ -224,26 +225,7 @@ export default {
         branch: this.branch,
       })
     ).data;
-    // 仓库的所以提交
-    // const res2 = await getcommits({
-    //   owner: "zhangyibo111",
-    //   repo: "git-stuby",
-    // });
-    // console.log(res2);
   },
-  // watch: {
-  //   async branch() {
-  //     this.aBranch = (
-  //       await aBranch({
-  //         owner: this.owner,
-  //         repo: this.repo,
-  //         branch: this.branch,
-  //       })
-  //     ).data;
-  //     this.warehousePath = this.aBranch.name;
-  //     console.log(this.aBranch.name);
-  //   },
-  // },
   watch: {
     async branch() {
       // 第一个异步操作：获取分支信息
@@ -259,8 +241,8 @@ export default {
 
       // 使用获取到的分支信息作为参数执行第二个异步操作
       const res = await getRepoTree({
-        owner: "zhangyibo111",
-        repo: "git-stuby",
+        owner: this.owner,
+        repo: this.repo,
         sha: this.warehousePath,
       });
       this.trees = res.data.tree;
@@ -277,7 +259,13 @@ export default {
   },
   computed: {
     fullName() {
-      return this.$route.query.name;
+      // 获取查询参数name的值
+      const name = this.$route.query.name || "";
+      // 调用splitName方法处理并分割name
+      const { owner, repo } = this.splitName(name);
+      // 更新组件的数据属性
+      // 根据需要返回处理结果，这里仅作为示例
+      return { owner, repo };
     },
     formattedCommitDate() {
       // 确保aBranch.commit.commit.committer.date存在
@@ -296,6 +284,15 @@ export default {
     },
   },
   methods: {
+    splitName(name) {
+      // 使用 "/" 对 name 进行分割
+      const parts = name.split("/");
+      // 确保分割后有两部分，否则返回空字符串作为占位符
+      return {
+        owner: parts[0] || "",
+        repo: parts[1] || "",
+      };
+    },
     handleChange(value) {
       this.branch = value;
     },

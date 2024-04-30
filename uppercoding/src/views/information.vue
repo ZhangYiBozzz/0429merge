@@ -202,7 +202,7 @@
                 style="color: #747988"
                 class="w-[18px] h-[16px] mr-[10px]"
               />
-              <span>动态</span>
+              <span @click="$router.push('/dynamic')">动态</span>
             </div>
             <span></span>
           </a-menu-item>

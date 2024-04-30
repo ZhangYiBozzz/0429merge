@@ -17,8 +17,16 @@ export const directory = (owner, repo, sha, params, num) =>
   );
 
 // 获取单个分支
-export const aBranch = (owner, repo, params, branch) =>
+export const aBranch = ({ owner, repo, branch } = {}, params) =>
   request.get(`/api/v5/repos/${owner}/${repo}/branches/${branch}?${params}`);
 
 export const getlists = () =>
   request.get("api/v5/repos/simonhungchun/demo/commits");
+
+// 获取仓库的提交
+export const getcommits = ({ owner, repo } = {}) =>
+  request.get(`/api/v5/repos/${owner}/${repo}/commits`);
+
+// 获取所有分支
+export const branchAll = ({ owner, repo } = {}, params) =>
+  request.get(`/api/v5/repos/${owner}/${repo}/branches?${params}`);

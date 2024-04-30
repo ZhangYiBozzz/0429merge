@@ -1,7 +1,13 @@
 <template>
   <div
-    class="w-full h-[100vh] pt-[90px] bg-[url('../../img/bj.png')] bg-cover relative"
+    class="w-full h-[100vh] pt-[100px] bg-[url('../../img/bj.png')] bg-cover relative"
   >
+    <div
+      v-show="myerror"
+      class="w-[800px] absolute translate-x-[-50%] left-[50%] top-[10px] z-20"
+    >
+      <a-alert message="错误" description="登录失败" type="error" show-icon />
+    </div>
     <div class="absolute top-[10px] right-[50px]">
       <a-select default-value="zh" style="width: 120px" @change="handleChange">
         <a-select-option value="zh">简体中文</a-select-option>
@@ -115,6 +121,11 @@ import config from "@/config";
 import { mapMutations, mapState } from "vuex";
 
 export default {
+  data() {
+    return {
+      myerror: false,
+    };
+  },
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: "normal_login" });
   },
@@ -138,6 +149,9 @@ export default {
         });
         // this.$store.commit("setState", { key: "oauth", value: res.data });
         this.setState({ key: "oauth", value: res.data });
+        this.$router.push({
+          path: "/repositories",
+        });
       });
     },
     handleChange(lang) {

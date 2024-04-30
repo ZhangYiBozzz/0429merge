@@ -194,7 +194,6 @@ export default {
   methods: {
     // ZYB
     Jump(item) {
-      console.log(item.full_name);
       this.$router.push({
         path: "/information/files",
         query: { name: item.full_name },
